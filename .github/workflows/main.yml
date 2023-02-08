@@ -42,4 +42,4 @@ jobs:
       with:
         azcliversion: 2.30.0
         inlineScript: |
-          az functionapp config appsettings set --name "${{ secrets.FUNCTIONS_NAME }}"　--resource-group "${{ secrets.RESOURCE_GROUP_NAME }}"　--settings "BLOBLISTGENERATORINPUTSTORAGE=${{ secrets.BLOBLISTGENERATORINPUTSTORAGE }}" "BLOBLISTGENERATOROUTPUTSTORAGE=${{ secrets.BLOBLISTGENERATOROUTPUTSTORAGE }}"
+          az functionapp config appsettings set --name "${{ secrets.FUNCTIONS_NAME }}"　--resource-group "${{ secrets.RESOURCE_GROUP_NAME }}"　--settings "BLOBLISTGENERATORINPUTSTORAGE=${{ secrets.BLOBLISTGENERATORINPUTSTORAGE }}"
