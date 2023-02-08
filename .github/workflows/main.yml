@@ -11,15 +11,15 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+     name: test
     steps:
     - name: 'Checkout GitHub action'
       uses: actions/checkout@v2
-
     - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
       uses: actions/setup-python@v1
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-
     - name: 'Resolve Project Dependencies Using Pip'
       shell: bash
       run: |
