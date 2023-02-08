@@ -11,15 +11,15 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+     name: test
     steps:
     - name: 'Checkout GitHub action'
       uses: actions/checkout@v2
-
     - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
       uses: actions/setup-python@v1
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-
     - name: 'Resolve Project Dependencies Using Pip'
       shell: bash
       run: |
@@ -33,3 +33,13 @@ jobs:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Azure CLI script
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az functionapp config appsettings set --name "${{ secrets.FUNCTIONS_NAME }}" --resource-group "${{ secrets.RESOURCE_GROUP_NAME }}" --settings "BLOBLISTGENERATORINPUTSTORAGE=${{ secrets.BLOBLISTGENERATORINPUTSTORAGE }}" "BLOBLISTGENERATOROUTPUTSTORAGE=${{ secrets.BLOBLISTGENERATOROUTPUTSTORAGE }}"
